@@ -29,7 +29,7 @@ function sendForm(event) {
   const message = form.message.value.trim();
   // Telegram configuration: replace with your bot token and chat ID.
   const token = '8509335187:AAFbeBUt1B6E9wmkJRwWVqHNDhoXxW0v8IA';
-  const chatId = '8509335187';
+  const chatId = '1659999560';
   const text = encodeURIComponent(`\u2705 Новая заявка\nИмя: ${name}\nТелефон: ${phone}\nСообщение: ${message}`);
   // If token or chatId not provided, just display an alert and return false.
   if (!token || !chatId || token.includes('YOUR_TELEGRAM')) {
