@@ -4,11 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EV Charging B2B Solutions</title>
+    <!-- Import Inter font from Google Fonts for a clean modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <!-- Tailwind via CDN.  Using the CDN avoids the need for a build step. -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 13l4 4L19 7'></path></svg>" />
   </head>
-  <body class="bg-gray-900 text-gray-100">
+  <body class="font-['Inter'] bg-gray-900 text-gray-100">
     <!-- Language toggle.  When a button is clicked the page switches between Russian and Uzbek. -->
     <header class="fixed top-0 left-0 w-full bg-gray-900/70 backdrop-blur-md z-50">
       <div class="max-w-screen-xl mx-auto px-4 py-2 flex justify-between items-center">
@@ -222,24 +224,27 @@
             <h3 class="text-3xl font-semibold mb-8">Loyihalar va natijalar</h3>
             <p class="mb-6">Biz allaqachon yirik yoqilg‘i quyish shoxobchalari tarmog‘i, savdo markazlari va shahar to‘xtash joylari bilan hamkorlik qilmoqdamiz. Yechimlarimiz samaradorligini isbotladi.</p>
           </div>
-          <!-- Placeholder cards for portfolio.  You can replace these images and descriptions with real cases. -->
+          <!-- Portfolio cards with real photos: using royalty‑free placeholder images of EV charging stations. -->
           <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-gray-700 rounded-lg overflow-hidden">
-              <div class="h-48 bg-gradient-to-r from-green-700 to-green-500"></div>
+            <!-- Card 1 -->
+            <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:-translate-y-1">
+              <div class="h-48 w-full bg-center bg-cover" style="background-image: url('https://source.unsplash.com/600x400/?ev-charger,parking');"></div>
               <div class="p-4">
                 <h4 class="font-semibold mb-2">B2B&nbsp;Проект&nbsp;№1</h4>
-                <p>Установка 20&nbsp;зарядных станций на парковке бизнес-центра.</p>
+                <p>Установка 20&nbsp;зарядных станций на парковке бизнес‑центра.</p>
               </div>
             </div>
-            <div class="bg-gray-700 rounded-lg overflow-hidden">
-              <div class="h-48 bg-gradient-to-r from-green-700 to-green-500"></div>
+            <!-- Card 2 -->
+            <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:-translate-y-1">
+              <div class="h-48 w-full bg-center bg-cover" style="background-image: url('https://source.unsplash.com/600x400/?electric-car,chademo');"></div>
               <div class="p-4">
                 <h4 class="font-semibold mb-2">B2B&nbsp;Проект&nbsp;№2</h4>
                 <p>Интеграция зарядной инфраструктуры в сеть автозаправок.</p>
               </div>
             </div>
-            <div class="bg-gray-700 rounded-lg overflow-hidden">
-              <div class="h-48 bg-gradient-to-r from-green-700 to-green-500"></div>
+            <!-- Card 3 -->
+            <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:-translate-y-1">
+              <div class="h-48 w-full bg-center bg-cover" style="background-image: url('https://source.unsplash.com/600x400/?green-energy,charging-station');"></div>
               <div class="p-4">
                 <h4 class="font-semibold mb-2">B2B&nbsp;Проект&nbsp;№3</h4>
                 <p>Пилотный проект по оснащению жилого комплекса зарядками.</p>
