@@ -3,367 +3,1137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EV Charging B2B Solutions</title>
-    <!-- Import Inter font from Google Fonts for a clean modern look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <!-- Tailwind via CDN.  Using the CDN avoids the need for a build step. -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 13l4 4L19 7'></path></svg>" />
+    <title>Green Power — DC Fast Charging для бизнеса</title>
+    <style>
+      /*
+        Premium design tokens.  All colors, spacing, radii and typographic scales
+        are defined here for easy adjustment.  The page uses a dark theme with
+        subtle green accents to evoke high‑tech quality and sustainability.
+      */
+      :root {
+        --color-bg: #0c0d10;
+        --color-surface: rgba(255, 255, 255, 0.05);
+        --color-surface-light: rgba(255, 255, 255, 0.08);
+        --color-border: rgba(255, 255, 255, 0.1);
+        --color-accent: #8ad44b;
+        --color-accent-faded: rgba(138, 212, 75, 0.2);
+        --color-text-primary: #f5f7fa;
+        --color-text-secondary: #a1a6b0;
+        --color-text-muted: #6b7280;
+        --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+          Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        --radius-small: 6px;
+        --radius: 12px;
+        --radius-large: 20px;
+        --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-large: 0 6px 20px rgba(0, 0, 0, 0.4);
+        --spacing-1: 4px;
+        --spacing-2: 8px;
+        --spacing-3: 12px;
+        --spacing-4: 16px;
+        --spacing-5: 24px;
+        --spacing-6: 32px;
+        --spacing-8: 48px;
+        --heading-1: 3rem;
+        --heading-2: 2.25rem;
+        --heading-3: 1.75rem;
+        --heading-4: 1.25rem;
+        --text-large: 1.125rem;
+        --text-base: 1rem;
+        --text-small: 0.875rem;
+        --transition-fast: 0.2s ease;
+        --transition-slow: 0.6s ease;
+      }
+
+      /* Base reset and layout */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-family);
+        background-color: var(--color-bg);
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-weight: 600;
+        line-height: 1.2;
+        color: var(--color-text-primary);
+      }
+      h1 {
+        font-size: var(--heading-1);
+      }
+      h2 {
+        font-size: var(--heading-2);
+      }
+      h3 {
+        font-size: var(--heading-3);
+      }
+      h4 {
+        font-size: var(--heading-4);
+      }
+      p {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+      }
+      a {
+        color: var(--color-accent);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+      }
+      a:hover,
+      a:focus {
+        color: #b3e46d;
+      }
+      /* Utility classes */
+      .container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: var(--spacing-4);
+        padding-right: var(--spacing-4);
+      }
+      .btn {
+        display: inline-block;
+        padding: var(--spacing-3) var(--spacing-5);
+        border-radius: var(--radius);
+        background-color: var(--color-accent);
+        color: #0c0d10;
+        font-weight: 600;
+        transition: transform var(--transition-fast), background-color var(--transition-fast);
+      }
+      .btn:hover,
+      .btn:focus {
+        transform: translateY(-2px);
+        background-color: #a5ef5c;
+      }
+      .btn-secondary {
+        background-color: transparent;
+        border: 1px solid var(--color-accent);
+        color: var(--color-accent);
+      }
+      .btn-secondary:hover,
+      .btn-secondary:focus {
+        background-color: var(--color-accent-faded);
+      }
+      .glass {
+        background: var(--color-surface);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--color-border);
+      }
+      .section {
+        padding: var(--spacing-8) 0;
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity var(--transition-slow), transform var(--transition-slow);
+      }
+      .fade-in.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Sticky navigation */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(12px);
+        background-color: rgba(12, 13, 16, 0.6);
+        border-bottom: 1px solid var(--color-border);
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .nav-logo {
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--color-text-primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: var(--spacing-5);
+      }
+      .nav-links a {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        position: relative;
+      }
+      .nav-links a:hover,
+      .nav-links a:focus {
+        color: var(--color-text-primary);
+      }
+      .nav-links a.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-accent);
+      }
+      .nav-cta {
+        display: flex;
+        gap: var(--spacing-4);
+      }
+      /* Mobile navigation */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        width: 24px;
+        height: 18px;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+      .hamburger span {
+        display: block;
+        height: 2px;
+        background-color: var(--color-text-primary);
+        transition: transform var(--transition-fast), opacity var(--transition-fast);
+      }
+      /* Mobile menu overlay */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(12, 13, 16, 0.8);
+        backdrop-filter: blur(12px);
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-6);
+        z-index: 100;
+      }
+      .mobile-menu a {
+        font-size: 1.5rem;
+        color: var(--color-text-primary);
+      }
+      .mobile-menu .btn {
+        font-size: 1.25rem;
+      }
+      .no-scroll {
+        overflow: hidden;
+      }
+      /* Hero section */
+      #hero {
+        position: relative;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: var(--spacing-8);
+        overflow: hidden;
+      }
+      #hero .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #1b1f26 0%, #0c0d10 100%);
+        z-index: -3;
+      }
+      #hero .glow {
+        position: absolute;
+        bottom: -40%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120%;
+        height: 80%;
+        background: radial-gradient(circle at 50% 0%, rgba(138, 212, 75, 0.3), transparent 70%);
+        filter: blur(120px);
+        z-index: -2;
+      }
+      .charger-svg {
+        width: 260px;
+        height: 360px;
+        margin: var(--spacing-6) auto;
+        position: relative;
+      }
+      .charger-svg svg {
+        width: 100%;
+        height: 100%;
+        fill: var(--color-surface-light);
+      }
+      .shimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+      }
+      .shimmer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -150%;
+        height: 100%;
+        width: 50%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shimmer 6s linear infinite;
+      }
+      @keyframes shimmer {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(300%); }
+      }
+      #hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: var(--spacing-4);
+      }
+      #hero p {
+        max-width: 640px;
+        margin: 0 auto var(--spacing-6);
+        font-size: var(--text-large);
+        color: var(--color-text-secondary);
+      }
+      #hero .highlights {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-4);
+        margin-bottom: var(--spacing-6);
+      }
+      .highlight-pill {
+        padding: var(--spacing-2) var(--spacing-4);
+        background: var(--color-surface-light);
+        border-radius: 9999px;
+        font-size: var(--text-small);
+        color: var(--color-text-secondary);
+        border: 1px solid var(--color-border);
+      }
+      .scroll-hint {
+        margin-top: var(--spacing-6);
+        font-size: var(--text-small);
+        color: var(--color-text-muted);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .scroll-hint svg {
+        width: 24px;
+        height: 24px;
+        margin-top: var(--spacing-2);
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(6px); }
+        60% { transform: translateY(3px); }
+      }
+      /* Story section */
+      #story .content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      /* Models section */
+      #models .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: var(--spacing-6);
+      }
+      .model-card {
+        position: relative;
+        padding: var(--spacing-5);
+        border-radius: var(--radius);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      }
+      .model-card:hover,
+      .model-card:focus-within {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-medium);
+      }
+      .model-card h4 {
+        margin-bottom: var(--spacing-2);
+        color: var(--color-accent);
+      }
+      .model-card ul {
+        list-style: none;
+        margin-top: var(--spacing-3);
+      }
+      .model-card li {
+        margin-bottom: var(--spacing-2);
+        font-size: var(--text-small);
+        color: var(--color-text-secondary);
+      }
+      /* Solutions section */
+      #solutions .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--spacing-6);
+      }
+      .solution {
+        background: var(--color-surface);
+        padding: var(--spacing-5);
+        border-radius: var(--radius);
+        border: 1px solid var(--color-border);
+        transition: background-color var(--transition-fast);
+      }
+      .solution:hover {
+        background: var(--color-surface-light);
+      }
+      .solution svg {
+        width: 32px;
+        height: 32px;
+        margin-bottom: var(--spacing-3);
+        fill: var(--color-accent);
+      }
+      /* ROI calculator */
+      #roi .calculator {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: var(--spacing-5);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+      }
+      .slider-group {
+        margin-bottom: var(--spacing-5);
+      }
+      .slider-group label {
+        display: block;
+        margin-bottom: var(--spacing-2);
+        color: var(--color-text-primary);
+        font-weight: 500;
+      }
+      .slider-group input[type="range"] {
+        width: 100%;
+        appearance: none;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--color-surface-light);
+        outline: none;
+        cursor: pointer;
+      }
+      .slider-group input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        border: 2px solid var(--color-bg);
+        transition: transform var(--transition-fast);
+      }
+      .slider-group input[type="range"]:focus::-webkit-slider-thumb {
+        outline: 3px solid var(--color-accent-faded);
+      }
+      .result {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--spacing-4);
+        font-size: var(--text-large);
+      }
+      .result span {
+        color: var(--color-accent);
+        font-weight: 600;
+      }
+      .disclaimer {
+        font-size: var(--text-small);
+        margin-top: var(--spacing-2);
+        color: var(--color-text-muted);
+      }
+      /* Specs section */
+      #specs ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: var(--spacing-5);
+      }
+      #specs li {
+        list-style: none;
+        background: var(--color-surface);
+        padding: var(--spacing-4);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        font-size: var(--text-small);
+        color: var(--color-text-secondary);
+      }
+      /* Process section */
+      #process .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: var(--spacing-6);
+      }
+      .step {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: var(--spacing-5);
+        text-align: center;
+        transition: transform var(--transition-fast), background-color var(--transition-fast);
+      }
+      .step:hover {
+        transform: translateY(-2px);
+        background: var(--color-surface-light);
+      }
+      .step-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--color-accent);
+        margin-bottom: var(--spacing-3);
+      }
+      .step-title {
+        font-size: var(--text-large);
+        margin-bottom: var(--spacing-2);
+      }
+      .step-desc {
+        font-size: var(--text-small);
+        color: var(--color-text-secondary);
+      }
+      /* FAQ section */
+      #faq .accordion {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .accordion-item {
+        border-bottom: 1px solid var(--color-border);
+      }
+      .accordion-button {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: var(--spacing-4);
+        text-align: left;
+        font-size: var(--text-base);
+        font-weight: 600;
+        color: var(--color-text-primary);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+      .accordion-button:focus {
+        outline: 3px solid var(--color-accent-faded);
+      }
+      .accordion-button svg {
+        width: 16px;
+        height: 16px;
+        transition: transform var(--transition-fast);
+        fill: var(--color-accent);
+      }
+      .accordion-panel {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height var(--transition-fast) ease;
+        padding: 0 var(--spacing-4);
+      }
+      .accordion-panel.open {
+        padding-bottom: var(--spacing-4);
+      }
+      .accordion-panel p {
+        margin-top: var(--spacing-2);
+        color: var(--color-text-secondary);
+      }
+      /* Contact / CTA section */
+      #contact .cta-container {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: var(--spacing-6);
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      #contact h3 {
+        margin-bottom: var(--spacing-3);
+      }
+      #contact p {
+        margin-bottom: var(--spacing-5);
+        color: var(--color-text-secondary);
+      }
+      form {
+        display: grid;
+        gap: var(--spacing-4);
+      }
+      form input,
+      form textarea {
+        width: 100%;
+        padding: var(--spacing-3);
+        border-radius: var(--radius-small);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface-light);
+        color: var(--color-text-primary);
+        font-size: var(--text-base);
+      }
+      form input:focus,
+      form textarea:focus {
+        outline: 3px solid var(--color-accent-faded);
+      }
+      form button {
+        background-color: var(--color-accent);
+        color: var(--color-bg);
+        border: none;
+        border-radius: var(--radius);
+        padding: var(--spacing-4);
+        font-size: var(--text-base);
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color var(--transition-fast), transform var(--transition-fast);
+      }
+      form button:hover {
+        background-color: #a5ef5c;
+        transform: translateY(-2px);
+      }
+      form button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .toast {
+        position: fixed;
+        bottom: var(--spacing-5);
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--color-surface);
+        color: var(--color-text-primary);
+        padding: var(--spacing-3) var(--spacing-5);
+        border-radius: var(--radius);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-medium);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-fast);
+      }
+      .toast.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      /* Footer */
+      footer {
+        background: var(--color-surface);
+        border-top: 1px solid var(--color-border);
+        padding: var(--spacing-6) 0;
+        text-align: center;
+        font-size: var(--text-small);
+        color: var(--color-text-muted);
+      }
+      /* Responsive */
+      @media (max-width: 768px) {
+        #hero h1 {
+          font-size: 2.5rem;
+        }
+        nav .nav-links,
+        nav .nav-cta {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+      }
+    </style>
   </head>
-  <body class="font-['Inter'] bg-gray-900 text-gray-100">
-    <!-- Language toggle.  When a button is clicked the page switches between Russian and Uzbek. -->
-    <header class="fixed top-0 left-0 w-full bg-gray-900/70 backdrop-blur-md z-50">
-      <div class="max-w-screen-xl mx-auto px-4 py-2 flex justify-between items-center">
-        <h1 class="text-xl font-semibold">Green Power EV</h1>
-        <div>
-          <button id="lang-ru" class="mx-2 px-3 py-1 rounded-md border border-gray-700 hover:bg-gray-700">RU</button>
-          <button id="lang-uz" class="mx-2 px-3 py-1 rounded-md border border-gray-700 hover:bg-gray-700">UZ</button>
-        </div>
+  <body>
+    <!-- Sticky Navigation -->
+    <header>
+      <div class="container">
+        <nav>
+          <div class="nav-logo">Green&nbsp;Power</div>
+          <div class="nav-links" aria-label="Primary navigation">
+            <a href="#hero">Главная</a>
+            <a href="#story">О нас</a>
+            <a href="#models">Модели</a>
+            <a href="#solutions">Решения</a>
+            <a href="#roi">ROI</a>
+            <a href="#specs">Теххарактеристики</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="nav-cta">
+            <a href="#contact" class="btn btn-secondary">Связаться</a>
+            <a href="#" class="btn" id="brochureBtn">Скачать PDF</a>
+          </div>
+          <button class="hamburger" aria-label="Меню" aria-expanded="false" aria-controls="mobileNav">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </div>
+      <!-- Mobile menu overlay -->
+      <div id="mobileNav" class="mobile-menu" aria-hidden="true">
+        <a href="#hero">Главная</a>
+        <a href="#story">О нас</a>
+        <a href="#models">Модели</a>
+        <a href="#solutions">Решения</a>
+        <a href="#roi">ROI</a>
+        <a href="#specs">Теххарактеристики</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="btn" onclick="toggleMobileMenu(event)">Связаться</a>
+        <a href="#" class="btn btn-secondary" onclick="openBrochureModal(event)">Скачать PDF</a>
       </div>
     </header>
-    <main class="pt-16">
-      <!-- Hero section -->
-      <section class="relative overflow-hidden" style="background-image: url('https://source.unsplash.com/1920x1080/?electric-car,charging-station'); background-size: cover; background-position: center;">
-        <!-- overlay -->
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div class="relative max-w-screen-xl mx-auto px-4 py-28 flex flex-col lg:flex-row items-center gap-10">
-          <div class="flex-1">
-            <!-- Russian content -->
-            <div data-lang="ru">
-              <h2 class="text-4xl md:text-5xl font-bold mb-6">Премиальные зарядные станции<br />для&nbsp;электромобилей</h2>
-              <p class="text-lg md:text-xl mb-8 max-w-xl">
-                Мы предлагаем комплексные решения для бизнеса: от поставки зарядных
-                станций до обслуживания и&nbsp;мониторинга. Современные технологии,
-                надежность и простота интеграции.
-              </p>
-            </div>
-            <!-- Uzbek content -->
-            <div data-lang="uz" class="hidden">
-              <h2 class="text-4xl md:text-5xl font-bold mb-6">Elektr avtomobillar uchun premium zaryadlash stansiyalari</h2>
-              <p class="text-lg md:text-xl mb-8 max-w-xl">
-                Biz biznes uchun to‘liq yechimlarni taklif qilamiz: zaryadlash stansiyalarini yetkazib berishdan tortib xizmat ko‘rsatish va monitoringgacha. Zamonaviy texnologiyalar, ishonchlilik va integratsiyaning soddaligi.
-              </p>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <a href="#contact" class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-md">Связаться</a>
-              <a href="https://t.me/" target="_blank" class="border border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-6 py-3 rounded-md">Telegram</a>
-            </div>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="hero" class="section">
+        <div class="background"></div>
+        <div class="glow"></div>
+        <div class="container fade-in">
+          <h1>Зарядные станции DC для бизнеса</h1>
+          <p>Комплексные turnkey‑решения: проектирование, поставка, монтаж, сервис и&nbsp;мониторинг для вашего бизнеса.</p>
+          <div class="highlights">
+            <span class="highlight-pill">80–240&nbsp;kW</span>
+            <span class="highlight-pill">2&nbsp;коннектора</span>
+            <span class="highlight-pill">IP54</span>
+            <span class="highlight-pill">5‑летняя гарантия</span>
           </div>
-          <div class="hidden lg:flex flex-1 justify-center">
-            <!-- Illustration of charging station using inline SVG -->
-            <svg class="w-80 h-80 text-green-400 drop-shadow-lg" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M200 16H96a16 16 0 0 0-16 16v192a16 16 0 0 0 16 16h104a16 16 0 0 0 16-16V32a16 16 0 0 0-16-16Zm0 208H96V32h104Z"/>
-              <rect x="112" y="48" width="72" height="32" rx="8"/>
-              <rect x="112" y="96" width="72" height="32" rx="8"/>
-              <circle cx="148" cy="180" r="20"/>
-              <path d="M48 80h32v96H48z"/>
-              <path d="M16 56h48v16H16z"/>
-              <path d="M32 16h16v40H32z"/>
-            </svg>
-          </div>
-        </div>
-      </section>
-      <!-- Advantages section -->
-      <section class="bg-gray-800 py-16">
-        <div class="max-w-screen-xl mx-auto px-4">
-          <!-- RU -->
-          <div data-lang="ru">
-            <h3 class="text-3xl font-semibold mb-8">Наши преимущества</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-              <div class="p-6 bg-gray-700 rounded-lg flex items-start">
-                <div class="flex-shrink-0 mr-4">
-                  <!-- Icon: bolt -->
-                  <svg class="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 1L2 13h6v10l9-12h-6L11 1z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold mb-2">Высокая мощность</h4>
-                  <p>Станции поддерживают быструю зарядку с&nbsp;мощностью до&nbsp;150&nbsp;кВт, что позволяет сократить время ожидания.</p>
-                </div>
-              </div>
-              <div class="p-6 bg-gray-700 rounded-lg flex items-start">
-                <div class="flex-shrink-0 mr-4">
-                  <!-- Icon: cpu (abstract) -->
-                  <svg class="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 9h1V7a2 2 0 0 0-2-2h-1V4a1 1 0 0 0-2 0v1H9V4a1 1 0 0 0-2 0v1H6a2 2 0 0 0-2 2v1H3a1 1 0 0 0 0 2h1v6H3a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h1v1a1 1 0 0 0 2 0v-1h6v1a1 1 0 0 0 2 0v-1h1a2 2 0 0 0 2-2v-1h1a1 1 0 0 0 0-2h-1V9h1a1 1 0 0 0 0-2h-1V6a2 2 0 0 0-2-2h-1V3a1 1 0 0 0-2 0v1h-6V3a1 1 0 0 0-2 0v1H6a2 2 0 0 0-2 2v1H3a1 1 0 0 0 0 2h1v6H3a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h1v1a1 1 0 0 0 2 0v-1h6v1a1 1 0 0 0 2 0v-1h1a2 2 0 0 0 2-2v-1h1a1 1 0 0 0 0-2h-1V9z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold mb-2">Интеллектуальный контроль</h4>
-                  <p>Управление через облачную платформу: мониторинг, статистика, удаленное управление и&nbsp;обновления.</p>
-                </div>
-              </div>
-              <div class="p-6 bg-gray-700 rounded-lg flex items-start">
-                <div class="flex-shrink-0 mr-4">
-                  <!-- Icon: support/service -->
-                  <svg class="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 1a9 9 0 0 0-9 9v4a3 3 0 0 0 3 3h1v5a1 1 0 0 0 1.447.894L12 21l3.553 1.894A1 1 0 0 0 17 22v-5h1a3 3 0 0 0 3-3v-4a9 9 0 0 0-9-9z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold mb-2">Полный сервис</h4>
-                  <p>Установка, обучение персонала, гарантийное и&nbsp;послегарантийное обслуживание.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- UZ -->
-          <div data-lang="uz" class="hidden">
-            <h3 class="text-3xl font-semibold mb-8">Bizning afzalliklarimiz</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-              <div class="p-6 bg-gray-700 rounded-lg flex items-start">
-                <div class="flex-shrink-0 mr-4">
-                  <!-- Icon: bolt -->
-                  <svg class="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 1L2 13h6v10l9-12h-6L11 1z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold mb-2">Yuqori quvvat</h4>
-                  <p>Stansiyalar 150&nbsp;kVtgacha tez zaryadlashni qo‘llab-quvvatlaydi, kutish vaqtini qisqartiradi.</p>
-                </div>
-              </div>
-              <div class="p-6 bg-gray-700 rounded-lg flex items-start">
-                <div class="flex-shrink-0 mr-4">
-                  <!-- Icon: cpu (abstract) -->
-                  <svg class="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 9h1V7a2 2 0 0 0-2-2h-1V4a1 1 0 0 0-2 0v1H9V4a1 1 0 0 0-2 0v1H6a2 2 0 0 0-2 2v1H3a1 1 0 0 0 0 2h1v6H3a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h1v1a1 1 0 0 0 2 0v-1h6v1a1 1 0 0 0 2 0v-1h1a2 2 0 0 0 2-2v-1h1a1 1 0 0 0 0-2h-1V9h1a1 1 0 0 0 0-2h-1V6a2 2 0 0 0-2-2h-1V3a1 1 0 0 0-2 0v1h-6V3a1 1 0 0 0-2 0v1H6a2 2 0 0 0-2 2v1H3a1 1 0 0 0 0 2h1v6H3a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h1v1a1 1 0 0 0 2 0v-1h6v1a1 1 0 0 0 2 0v-1h1a2 2 0 0 0 2-2v-1h1a1 1 0 0 0 0-2h-1V9z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold mb-2">Aqlli boshqaruv</h4>
-                  <p>Bulutli platforma orqali monitoring, statistika, masofadan boshqarish va yangilanishlar.</p>
-                </div>
-              </div>
-              <div class="p-6 bg-gray-700 rounded-lg flex items-start">
-                <div class="flex-shrink-0 mr-4">
-                  <!-- Icon: support/service -->
-                  <svg class="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 1a9 9 0 0 0-9 9v4a3 3 0 0 0 3 3h1v5a1 1 0 0 0 1.447.894L12 21l3.553 1.894A1 1 0 0 0 17 22v-5h1a3 3 0 0 0 3-3v-4a9 9 0 0 0-9-9z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold mb-2">To‘liq servis</h4>
-                  <p>O‘rnatish, xodimlarni o‘qitish, kafolatli va kafolatdan keyingi xizmat.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- How it works -->
-      <section class="py-16">
-        <div class="max-w-screen-xl mx-auto px-4">
-          <!-- RU -->
-          <div data-lang="ru">
-            <h3 class="text-3xl font-semibold mb-8">Как это работает</h3>
-            <ol class="space-y-6">
-              <li class="flex items-start">
-                <span class="text-green-500 text-2xl mr-4">1.</span>
-                <div>
-                  <h4 class="font-semibold">Выбор решения</h4>
-                  <p>Мы анализируем потребности вашего бизнеса и подбираем оптимальные модели зарядных станций.</p>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <span class="text-green-500 text-2xl mr-4">2.</span>
-                <div>
-                  <h4 class="font-semibold">Установка и интеграция</h4>
-                  <p>Наши инженеры выполняют монтаж и настраивают систему для бесперебойной работы.</p>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <span class="text-green-500 text-2xl mr-4">3.</span>
-                <div>
-                  <h4 class="font-semibold">Поддержка и обслуживание</h4>
-                  <p>Мы обеспечиваем техническую поддержку, обновления программного обеспечения и обслуживание оборудования.</p>
-                </div>
-              </li>
-            </ol>
-          </div>
-          <!-- UZ -->
-          <div data-lang="uz" class="hidden">
-            <h3 class="text-3xl font-semibold mb-8">Qanday ishlaydi</h3>
-            <ol class="space-y-6">
-              <li class="flex items-start">
-                <span class="text-green-500 text-2xl mr-4">1.</span>
-                <div>
-                  <h4 class="font-semibold">Yechemini tanlash</h4>
-                  <p>Biz biznesingiz ehtiyojlarini tahlil qilib, eng mos zaryadlash stansiyalarini tanlaymiz.</p>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <span class="text-green-500 text-2xl mr-4">2.</span>
-                <div>
-                  <h4 class="font-semibold">O‘rnatish va integratsiya</h4>
-                  <p>Muhandislarimiz o‘rnatishni amalga oshirib, tizimni uzluksiz ishlash uchun sozlaydi.</p>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <span class="text-green-500 text-2xl mr-4">3.</span>
-                <div>
-                  <h4 class="font-semibold">Qo‘llab-quvvatlash va servis</h4>
-                  <p>Biz texnik qo‘llab-quvvatlash, dasturiy ta’minotni yangilash va uskunani xizmat ko‘rsatishni ta’minlaymiz.</p>
-                </div>
-              </li>
-            </ol>
-          </div>
-        </div>
-      </section>
-      <!-- Portfolio / cases section -->
-      <section class="bg-gray-800 py-16">
-        <div class="max-w-screen-xl mx-auto px-4">
-          <!-- RU -->
-          <div data-lang="ru">
-            <h3 class="text-3xl font-semibold mb-8">Кейсы и проекты</h3>
-            <p class="mb-6">Мы уже работаем с крупнейшими сетями АЗС, торговыми центрами и муниципальными парковками. Наши решения успешно интегрированы и доказали свою эффективность.</p>
-          </div>
-          <!-- UZ -->
-          <div data-lang="uz" class="hidden">
-            <h3 class="text-3xl font-semibold mb-8">Loyihalar va natijalar</h3>
-            <p class="mb-6">Biz allaqachon yirik yoqilg‘i quyish shoxobchalari tarmog‘i, savdo markazlari va shahar to‘xtash joylari bilan hamkorlik qilmoqdamiz. Yechimlarimiz samaradorligini isbotladi.</p>
-          </div>
-          <!-- Portfolio cards with real photos: using royalty‑free placeholder images of EV charging stations. -->
-          <div class="grid md:grid-cols-3 gap-8">
-            <!-- Card 1 -->
-            <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:-translate-y-1">
-              <div class="h-48 w-full bg-center bg-cover" style="background-image: url('https://source.unsplash.com/600x400/?ev-charger,parking');"></div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">B2B&nbsp;Проект&nbsp;№1</h4>
-                <p>Установка 20&nbsp;зарядных станций на парковке бизнес‑центра.</p>
-              </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:-translate-y-1">
-              <div class="h-48 w-full bg-center bg-cover" style="background-image: url('https://source.unsplash.com/600x400/?electric-car,chademo');"></div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">B2B&nbsp;Проект&nbsp;№2</h4>
-                <p>Интеграция зарядной инфраструктуры в сеть автозаправок.</p>
-              </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg transform transition-transform hover:-translate-y-1">
-              <div class="h-48 w-full bg-center bg-cover" style="background-image: url('https://source.unsplash.com/600x400/?green-energy,charging-station');"></div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">B2B&nbsp;Проект&nbsp;№3</h4>
-                <p>Пилотный проект по оснащению жилого комплекса зарядками.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Pricing / packages -->
-      <section class="py-16">
-        <div class="max-w-screen-xl mx-auto px-4 text-center">
-          <!-- RU -->
-          <div data-lang="ru">
-            <h3 class="text-3xl font-semibold mb-4">Пакеты и цены</h3>
-            <p class="mb-6">Подробные тарифы и комплектации доступны в нашем прайс-листе.</p>
-          </div>
-          <!-- UZ -->
-          <div data-lang="uz" class="hidden">
-            <h3 class="text-3xl font-semibold mb-4">Paketlar va narxlar</h3>
-            <p class="mb-6">Batafsil tariflar va komplektatsiyalar bizning narxlar ro‘yxatimizda.</p>
-          </div>
-          <a href="pricelist.pdf" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-3 rounded-md">Скачать PDF</a>
-        </div>
-      </section>
-      <!-- FAQ section -->
-      <section class="bg-gray-800 py-16">
-        <div class="max-w-screen-xl mx-auto px-4">
-          <!-- RU -->
-          <div data-lang="ru">
-            <h3 class="text-3xl font-semibold mb-8">FAQ</h3>
-            <div class="space-y-4">
-              <details class="bg-gray-700 p-4 rounded-md">
-                <summary class="font-semibold cursor-pointer">Какие виды разъемов поддерживают станции?</summary>
-                <p class="mt-2">Наши станции поддерживают распространенные стандарты&nbsp;— Type&nbsp;2, CCS2 и Chademo.</p>
-              </details>
-              <details class="bg-gray-700 p-4 rounded-md">
-                <summary class="font-semibold cursor-pointer">Как подключиться к облачной платформе?</summary>
-                <p class="mt-2">После установки вы получаете доступ к панели управления, где можно следить за статистикой и управлять станциями.</p>
-              </details>
-              <details class="bg-gray-700 p-4 rounded-md">
-                <summary class="font-semibold cursor-pointer">Сколько времени занимает установка?</summary>
-                <p class="mt-2">Обычно монтаж одной станции занимает 1–2 дня в зависимости от условий на объекте.</p>
-              </details>
-            </div>
-          </div>
-          <!-- UZ -->
-          <div data-lang="uz" class="hidden">
-            <h3 class="text-3xl font-semibold mb-8">Ko‘p so‘raladigan savollar</h3>
-            <div class="space-y-4">
-              <details class="bg-gray-700 p-4 rounded-md">
-                <summary class="font-semibold cursor-pointer">Stansiyalar qaysi ulagich turlarini qo‘llab-quvvatlaydi?</summary>
-                <p class="mt-2">Bizning stansiyalar Type&nbsp;2, CCS2 va Chademo kabi keng tarqalgan standartlarni qo‘llab-quvvatlaydi.</p>
-              </details>
-              <details class="bg-gray-700 p-4 rounded-md">
-                <summary class="font-semibold cursor-pointer">Bulutli platformaga qanday ulanish mumkin?</summary>
-                <p class="mt-2">O‘rnatishdan so‘ng siz boshqaruv paneliga kirish imkoniyatiga ega bo‘lasiz, u yerda statistika va stansiyalarni boshqarishingiz mumkin.</p>
-              </details>
-              <details class="bg-gray-700 p-4 rounded-md">
-                <summary class="font-semibold cursor-pointer">O‘rnatish qancha vaqt oladi?</summary>
-                <p class="mt-2">Odatda bir stansiyani o‘rnatish 1–2 kun davom etadi, obyekt sharoitlariga bog‘liq.</p>
-              </details>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Contact / CTA section -->
-      <section id="contact" class="py-16">
-        <div class="max-w-screen-xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
-          <!-- Left column: contact info -->
           <div>
-            <!-- RU -->
-            <div data-lang="ru">
-              <h3 class="text-3xl font-semibold mb-4">Свяжитесь с нами</h3>
-              <p class="mb-4">Оставьте заявку или напишите нам в Telegram — мы ответим на все ваши вопросы.</p>
-              <p class="mb-2"><strong>Телефон:</strong> <a href="tel:+998930000037" class="text-green-400 hover:underline">+998&nbsp;93&nbsp;000&nbsp;00&nbsp;37</a></p>
-              <p class="mb-2"><strong>Telegram:</strong> <a href="https://t.me/" class="text-green-400 hover:underline" target="_blank">@ВашТелеграм</a></p>
+            <a href="#contact" class="btn">Запросить предложение</a>
+            <a href="#" class="btn btn-secondary" id="callNow">Позвонить</a>
+          </div>
+          <div class="charger-svg">
+            <!-- Simple charger silhouette using inline SVG -->
+            <svg viewBox="0 0 200 360" aria-hidden="true">
+              <rect x="50" y="20" width="100" height="260" rx="12" ry="12" />
+              <rect x="70" y="50" width="60" height="40" rx="6" />
+              <rect x="70" y="110" width="60" height="40" rx="6" />
+              <circle cx="100" cy="220" r="24" />
+              <rect x="40" y="290" width="20" height="50" rx="4" />
+              <rect x="140" y="290" width="20" height="50" rx="4" />
+            </svg>
+            <div class="shimmer"></div>
+          </div>
+          <div class="scroll-hint">
+            Прокрутите вниз
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 16l-6-6h12l-6 6z"/></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Story Section -->
+      <section id="story" class="section fade-in">
+        <div class="container content">
+          <h2>О Green&nbsp;Power</h2>
+          <p>
+            Green&nbsp;Power — ваш надежный партнёр в&nbsp;мире быстрой зарядки. Мы проектируем,
+            поставляем и&nbsp;устанавливаем DC&nbsp;зарядные станции для электромобилей,
+            обеспечивая максимальный uptime и&nbsp;прозрачную отчётность по выручке. Наши
+            специалисты сопровождают вас на каждом этапе: от предварительного анализа
+            площадки до сервиса 24/7 и удалённого мониторинга.
+          </p>
+        </div>
+      </section>
+
+      <!-- Models Section -->
+      <section id="models" class="section fade-in">
+        <div class="container">
+          <h2>Модельный ряд</h2>
+          <p>Выберите подходящую мощность для вашего бизнеса. Наши станции поддерживают два коннектора и стандарт IP54.</p>
+          <div class="cards">
+            <!-- Model 80 kW -->
+            <div class="model-card" tabindex="0">
+              <h4>80&nbsp;kW</h4>
+              <ul>
+                <li>2× CCS&nbsp;2</li>
+                <li>До 200&nbsp;A на коннектор</li>
+                <li>Рекомендовано для парковок и небольших АЗС</li>
+              </ul>
             </div>
-            <!-- UZ -->
-            <div data-lang="uz" class="hidden">
-              <h3 class="text-3xl font-semibold mb-4">Biz bilan bog‘laning</h3>
-              <p class="mb-4">Ariza qoldiring yoki Telegram orqali yozing — biz barcha savollaringizga javob beramiz.</p>
-              <p class="mb-2"><strong>Telefon:</strong> <a href="tel:+998930000037" class="text-green-400 hover:underline">+998&nbsp;93&nbsp;000&nbsp;00&nbsp;37</a></p>
-              <p class="mb-2"><strong>Telegram:</strong> <a href="https://t.me/" class="text-green-400 hover:underline" target="_blank">@SizningTelegram</a></p>
+            <!-- Model 120 kW -->
+            <div class="model-card" tabindex="0">
+              <h4>120&nbsp;kW</h4>
+              <ul>
+                <li>2× CCS&nbsp;2</li>
+                <li>До 300&nbsp;A на коннектор</li>
+                <li>Оптимально для сетей АЗС и торговых центров</li>
+              </ul>
+            </div>
+            <!-- Model 160 kW -->
+            <div class="model-card" tabindex="0">
+              <h4>160&nbsp;kW</h4>
+              <ul>
+                <li>2× CCS&nbsp;2</li>
+                <li>До 400&nbsp;A на коннектор</li>
+                <li>Подходит для высоких потоков машин</li>
+              </ul>
+            </div>
+            <!-- Model 180 kW -->
+            <div class="model-card" tabindex="0">
+              <h4>180&nbsp;kW</h4>
+              <ul>
+                <li>2× CCS&nbsp;2</li>
+                <li>Гибкое распределение мощности</li>
+                <li>IP54, OCPP 1.6, Ethernet/4G</li>
+              </ul>
+            </div>
+            <!-- Model 240 kW -->
+            <div class="model-card" tabindex="0">
+              <h4>240&nbsp;kW</h4>
+              <ul>
+                <li>2× CCS&nbsp;2 / Chademo</li>
+                <li>До 600&nbsp;A на коннектор</li>
+                <li>Для автобусов и скоростных трасс</li>
+              </ul>
             </div>
           </div>
-          <!-- Right column: contact form -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <!-- RU form -->
-            <form data-lang="ru" class="space-y-4" onsubmit="return sendForm(event)">
-              <h4 class="text-2xl font-semibold mb-4">Оставить заявку</h4>
-              <input type="text" name="name" placeholder="Ваше имя" required class="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-              <input type="tel" name="phone" placeholder="Номер телефона" required class="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-              <textarea name="message" placeholder="Ваше сообщение" rows="4" class="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
-              <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-3 rounded-md">Отправить</button>
+        </div>
+      </section>
+
+      <!-- Solutions Section -->
+      <section id="solutions" class="section fade-in">
+        <div class="container">
+          <h2>Наши решения</h2>
+          <p>Мы предлагаем полный спектр услуг, чтобы сделать зарядку для электромобилей прибыльной и надежной.</p>
+          <div class="grid">
+            <div class="solution" tabindex="0">
+              <!-- Uptime icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm1 17.93V20a1 1 0 0 1-2 0v-.07A8.006 8.006 0 0 1 4.07 13H4a1 1 0 0 1 0-2h.07A8.006 8.006 0 0 1 11 4.07V4a1 1 0 0 1 2 0v.07A8.006 8.006 0 0 1 19.93 11H20a1 1 0 0 1 0 2h-.07A8.006 8.006 0 0 1 13 19.93z"/></svg>
+              <h4>Максимальный uptime</h4>
+              <p>Система резервирования и удалённого мониторинга обеспечивают работу без простоев.</p>
+            </div>
+            <div class="solution" tabindex="0">
+              <!-- Monitoring icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h18v4H3zm0 7h12v4H3zm0 7h6v4H3z"/></svg>
+              <h4>Мониторинг и отчётность</h4>
+              <p>Панель управления позволяет видеть статистику, выручку и контроль расходов в&nbsp;реальном времени.</p>
+            </div>
+            <div class="solution" tabindex="0">
+              <!-- Warranty icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L1 7l11 5 9-4.09V13a9 9 0 1 1-12 8.46"/></svg>
+              <h4>Гарантия 5 лет</h4>
+              <p>Мы даём расширенную гарантию на оборудование и предлагаем сервисные планы.</p>
+            </div>
+            <div class="solution" tabindex="0">
+              <!-- Delivery icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h2l1-3h13l1 3h3v5h-3l-1 3H7l-1-3H3v-5z"/></svg>
+              <h4>Быстрая поставка</h4>
+              <p>Собственный склад и логистика позволяют доставлять станции в течение 1–2 дней.</p>
+            </div>
+            <div class="solution" tabindex="0">
+              <!-- Turnkey icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z M2 2h2v20H2zm18 0h2v20h-2z"/></svg>
+              <h4>Turnkey‑проектирование</h4>
+              <p>Мы занимаемся проектированием площадок, подбором моделей и интеграцией с&nbsp;вашей инфраструктурой.</p>
+            </div>
+            <div class="solution" tabindex="0">
+              <!-- Scaling icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M12 3v18"/></svg>
+              <h4>Масштабируемость</h4>
+              <p>Легко расширяйте сеть зарядных станций по мере роста спроса.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROI Calculator Section -->
+      <section id="roi" class="section fade-in">
+        <div class="container">
+          <h2>Калькулятор окупаемости</h2>
+          <p>Оцените потенциал дохода от станции: задайте количество сессий в день и среднюю цену за зарядку.</p>
+          <div class="calculator" aria-live="polite">
+            <div class="slider-group">
+              <label for="sessionsRange">Сессий зарядки в день: <span id="sessionsValue">30</span></label>
+              <input type="range" id="sessionsRange" min="5" max="100" value="30" step="1" />
+            </div>
+            <div class="slider-group">
+              <label for="priceRange">Средняя стоимость (сом/UZS) за сессию: <span id="priceValue">20000</span></label>
+              <input type="range" id="priceRange" min="5000" max="60000" value="20000" step="1000" />
+            </div>
+            <div class="result">
+              <div>Выручка/день: <span id="grossDay">0</span></div>
+              <div>Выручка/месяц: <span id="grossMonth">0</span></div>
+              <div>Чистая прибыль/месяц: <span id="netMonth">0</span></div>
+            </div>
+            <div class="disclaimer">*
+              Расчёты являются ориентировочными и не учитывают налоговые и операционные расходы. Стоимость электроэнергии: 40&nbsp;% от стоимости сессии.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Specs Section -->
+      <section id="specs" class="section fade-in">
+        <div class="container">
+          <h2>Технические характеристики</h2>
+          <ul>
+            <li>Мощность: 80 / 120 / 160 / 180 / 240&nbsp;kW</li>
+            <li>Коннекторы: 2× CCS2 / Chademo</li>
+            <li>Степень защиты: IP54</li>
+            <li>Эффективность: ≥95&nbsp;%</li>
+            <li>Диапазон температур: −40 – +55 °C</li>
+            <li>Протокол: OCPP 1.6, Ethernet, 4G</li>
+            <li>Гарантия: 5 лет, сервисная поддержка 24/7</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Process Section -->
+      <section id="process" class="section fade-in">
+        <div class="container">
+          <h2>Как мы работаем</h2>
+          <div class="steps">
+            <div class="step" tabindex="0">
+              <div class="step-number">1</div>
+              <div class="step-title">Консультация</div>
+              <p class="step-desc">Изучаем ваш бизнес и подбираем оптимальные решения под задачи и бюджет.</p>
+            </div>
+            <div class="step" tabindex="0">
+              <div class="step-number">2</div>
+              <div class="step-title">Проект и установка</div>
+              <p class="step-desc">Инженеры готовят проект, выполняют монтаж и подключение станции.</p>
+            </div>
+            <div class="step" tabindex="0">
+              <div class="step-number">3</div>
+              <div class="step-title">Комиссия и обучение</div>
+              <p class="step-desc">Проводим тесты, обучаем персонал, передаем оборудование в эксплуатацию.</p>
+            </div>
+            <div class="step" tabindex="0">
+              <div class="step-number">4</div>
+              <div class="step-title">Сервис и рост</div>
+              <p class="step-desc">Обеспечиваем мониторинг, поддержку и при необходимости масштабируем сеть.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="section fade-in">
+        <div class="container">
+          <h2>Частые вопросы</h2>
+          <div class="accordion">
+            <!-- Item 1 -->
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="faq1">Какие разъемы поддерживают станции?
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div id="faq1" class="accordion-panel" aria-hidden="true">
+                <p>Все модели оснащены двумя коннекторами CCS2, а некоторые варианты включают Chademo для расширенной совместимости.</p>
+              </div>
+            </div>
+            <!-- Item 2 -->
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="faq2">Сколько времени занимает установка?
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div id="faq2" class="accordion-panel" aria-hidden="true">
+                <p>От подписания договора до ввода в эксплуатацию проходит 5–15 рабочих дней, включая проект, поставку и монтаж.</p>
+              </div>
+            </div>
+            <!-- Item 3 -->
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="faq3">Какая предусмотрена гарантия?
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div id="faq3" class="accordion-panel" aria-hidden="true">
+                <p>Мы предоставляем 5‑летнюю гарантию и сервисную поддержку на всё оборудование.</p>
+              </div>
+            </div>
+            <!-- Item 4 -->
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="faq4">Как происходит оплата и отчётность?
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div id="faq4" class="accordion-panel" aria-hidden="true">
+                <p>Станции интегрированы с платёжными системами. Вы получаете прозрачную статистику по каждой сессии и доходу в режиме реального времени.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section / CTA -->
+      <section id="contact" class="section fade-in">
+        <div class="container">
+          <div class="cta-container">
+            <h3>Свяжитесь с нами</h3>
+            <p>Оставьте свои контактные данные, и мы поможем подобрать оптимальное решение и рассчитать стоимость.</p>
+            <form id="contactForm">
+              <input type="text" name="name" id="name" placeholder="Ваше имя" required aria-label="Имя" />
+              <input type="tel" name="phone" id="phone" placeholder="Номер телефона" required aria-label="Телефон" />
+              <textarea name="message" id="message" rows="4" placeholder="Сообщение" aria-label="Сообщение"></textarea>
+              <button type="submit">Отправить заявку</button>
             </form>
-            <!-- UZ form -->
-            <form data-lang="uz" class="space-y-4 hidden" onsubmit="return sendForm(event)">
-              <h4 class="text-2xl font-semibold mb-4">Ariza qoldiring</h4>
-              <input type="text" name="name" placeholder="Ismingiz" required class="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-              <input type="tel" name="phone" placeholder="Telefon raqami" required class="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
-              <textarea name="message" placeholder="Xabaringiz" rows="4" class="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
-              <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-3 rounded-md">Yuborish</button>
-            </form>
+            <div style="margin-top: var(--spacing-4);">
+              Или позвоните нам: <a href="tel:+998930000037" class="btn btn-secondary" style="margin-top: var(--spacing-2);">+998 93 000 00 37</a>
+            </div>
           </div>
         </div>
       </section>
     </main>
-    <!-- Footer -->
-    <footer class="bg-gray-900 py-8">
-      <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-        <p>© <span id="current-year"></span> Green Power. Все права защищены.</p>
-        <a href="#" class="hover:underline">Политика конфиденциальности</a>
+
+    <footer>
+      <div class="container">
+        © <span id="year"></span> Green&nbsp;Power. Все права защищены.
+        <br />
+        <a href="#">Политика конфиденциальности</a>
       </div>
     </footer>
-    <!-- Custom script for language toggle and form submission -->
-    <script src="scripts.js"></script>
+
+    <!-- Brochure Modal (hidden by default) -->
+    <div id="brochureModal" class="mobile-menu" aria-hidden="true" role="dialog" aria-modal="true">
+      <div style="background: var(--color-surface); border: 1px solid var(--color-border); padding: var(--spacing-5); border-radius: var(--radius); max-width: 500px; text-align: center;">
+        <h4>Брошюра Green&nbsp;Power</h4>
+        <p>Здесь будет доступна PDF-брошюра для скачивания. Мы пришлём её вам по запросу.</p>
+        <button class="btn" onclick="closeBrochureModal()">Закрыть</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status">Спасибо! Ваша заявка отправлена.</div>
+
     <script>
       // Set current year in footer
-      document.getElementById('current-year').textContent = new Date().getFullYear();
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Mobile menu toggle
+      const hamburger = document.querySelector('.hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      hamburger.addEventListener('click', toggleMobileMenu);
+      function toggleMobileMenu(event) {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', String(!expanded));
+        mobileNav.style.display = expanded ? 'none' : 'flex';
+        mobileNav.setAttribute('aria-hidden', expanded ? 'true' : 'false');
+        document.body.classList.toggle('no-scroll', !expanded);
+        // animate hamburger lines
+        hamburger.querySelectorAll('span').forEach((line, index) => {
+          if (!expanded) {
+            // open state
+            if (index === 0) line.style.transform = 'rotate(45deg) translateY(7px)';
+            if (index === 1) line.style.opacity = '0';
+            if (index === 2) line.style.transform = 'rotate(-45deg) translateY(-7px)';
+          } else {
+            // close state
+            line.style.transform = '';
+            line.style.opacity = '1';
+          }
+        });
+      }
+      // Close mobile menu on nav link click
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (mobileNav.style.display === 'flex') toggleMobileMenu();
+        });
+      });
+      // Brochure modal toggle
+      const brochureBtn = document.getElementById('brochureBtn');
+      const brochureModal = document.getElementById('brochureModal');
+      brochureBtn.addEventListener('click', openBrochureModal);
+      function openBrochureModal(event) {
+        event.preventDefault();
+        brochureModal.style.display = 'flex';
+        brochureModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+      }
+      function closeBrochureModal() {
+        brochureModal.style.display = 'none';
+        brochureModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('no-scroll');
+      }
+      // Call now handler
+      document.getElementById('callNow').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'tel:+998930000037';
+      });
+      // ROI calculator logic
+      const sessionsRange = document.getElementById('sessionsRange');
+      const priceRange = document.getElementById('priceRange');
+      const sessionsValue = document.getElementById('sessionsValue');
+      const priceValue = document.getElementById('priceValue');
+      const grossDay = document.getElementById('grossDay');
+      const grossMonth = document.getElementById('grossMonth');
+      const netMonth = document.getElementById('netMonth');
+      function formatNumber(n) {
+        return n.toLocaleString('ru-RU');
+      }
+      function calculateROI() {
+        const sessions = parseInt(sessionsRange.value, 10);
+        const price = parseInt(priceRange.value, 10);
+        sessionsValue.textContent = sessions;
+        priceValue.textContent = price;
+        const dailyGross = sessions * price;
+        const monthlyGross = dailyGross * 30;
+        const net = monthlyGross * 0.6; // assuming 40% cost for electricity and operations
+        animateValue(grossDay, dailyGross);
+        animateValue(grossMonth, monthlyGross);
+        animateValue(netMonth, net);
+      }
+      let animationFrame;
+      function animateValue(el, endValue) {
+        const startValue = parseInt(el.dataset.value || '0', 10);
+        const duration = 500;
+        const startTime = performance.now();
+        function tick(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const value = Math.floor(startValue + (endValue - startValue) * progress);
+          el.textContent = formatNumber(value);
+          el.dataset.value = value;
+          if (progress < 1) {
+            animationFrame = requestAnimationFrame(tick);
+          }
+        }
+        cancelAnimationFrame(animationFrame);
+        requestAnimationFrame(tick);
+      }
+      sessionsRange.addEventListener('input', calculateROI);
+      priceRange.addEventListener('input', calculateROI);
+      calculateROI();
+      // FAQ accordion logic
+      document.querySelectorAll('.accordion-button').forEach(button => {
+        button.addEventListener('click', () => {
+          const expanded = button.getAttribute('aria-expanded') === 'true';
+          button.setAttribute('aria-expanded', String(!expanded));
+          const panel = document.getElementById(button.getAttribute('aria-controls'));
+          panel.classList.toggle('open', !expanded);
+          panel.style.maxHeight = !expanded ? panel.scrollHeight + 'px' : null;
+          panel.setAttribute('aria-hidden', expanded ? 'true' : 'false');
+          const icon = button.querySelector('svg');
+          icon.style.transform = !expanded ? 'rotate(180deg)' : 'rotate(0)';
+        });
+      });
+      // IntersectionObserver for fade-in animation
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+      });
+      // Form submission
+      const form = document.getElementById('contactForm');
+      const toast = document.getElementById('toast');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button');
+        submitBtn.disabled = true;
+        // Simulate async request
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          showToast();
+          form.reset();
+        }, 1200);
+      });
+      function showToast() {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+      // Close brochure modal on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (mobileNav.style.display === 'flex') toggleMobileMenu();
+          if (brochureModal.style.display === 'flex') closeBrochureModal();
+        }
+      });
     </script>
   </body>
 </html>
